@@ -1,6 +1,7 @@
 package com.sk.wcnwebchangesnotifier;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -47,12 +48,20 @@ public class MainActivity extends AppCompatActivity {
                     String data = doc[0].body().toString();
 
                     Builder.append(data).append("\n");
+                    File folder = new File(Environment.getExternalStorageDirectory() + "/wcn");
+                    boolean success = true;
+                    if (!folder.exists()) {
+                        success = folder.mkdir();
 
+                    } else {
+                        Toast.makeText(getBaseContext(),
+                                "Error while creating the folder",
+                                Toast.LENGTH_SHORT).show();
+                    }
 
-
-                    Toast.makeText(getBaseContext(),
-                            "Done writing SD 'mysdfile.txt'",
-                            Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),
+                        "Done writing SD 'data.txt'",
+                        Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
 Builder.append("Errure : ").append(e.getMessage()).append("\n");
                 }
@@ -61,7 +70,7 @@ Builder.append("Errure : ").append(e.getMessage()).append("\n");
                     public void run() {
 TextView tet = (TextView)findViewById(R.id.textView);
                         try{
-                        File myFile = new File("/sdcard/mysdfile.txt");
+                        File myFile = new File("/sdcard/wcn/data.txt");
                         myFile.createNewFile();
                         FileOutputStream fOut = new FileOutputStream(myFile);
                         OutputStreamWriter myOutWriter =
