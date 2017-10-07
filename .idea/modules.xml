@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WCN(WebChangesNotifier).iml" filepath="$PROJECT_DIR$/WCN(WebChangesNotifier).iml" />
+      <module fileurl="file://$PROJECT_DIR$/WCN.iml" filepath="$PROJECT_DIR$/WCN.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

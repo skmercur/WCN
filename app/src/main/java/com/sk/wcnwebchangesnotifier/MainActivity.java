@@ -15,6 +15,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private void getWebsite(){
         final Document[] doc = {null};
         final StringBuilder Builder = new StringBuilder();
-        final FileOutputStream[] outputStream = {null};
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -47,9 +47,12 @@ public class MainActivity extends AppCompatActivity {
                     String data = doc[0].body().toString();
 
                     Builder.append(data).append("\n");
-                    outputStream[0] = openFileOutput("helloo",Context.MODE_PRIVATE);
-                    outputStream[0].write(Builder.toString().getBytes());
-                    outputStream[0].close();
+
+
+
+                    Toast.makeText(getBaseContext(),
+                            "Done writing SD 'mysdfile.txt'",
+                            Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
 Builder.append("Errure : ").append(e.getMessage()).append("\n");
                 }
@@ -57,7 +60,19 @@ Builder.append("Errure : ").append(e.getMessage()).append("\n");
                     @Override
                     public void run() {
 TextView tet = (TextView)findViewById(R.id.textView);
-                        tet.setText("Done !");
+                        try{
+                        File myFile = new File("/sdcard/mysdfile.txt");
+                        myFile.createNewFile();
+                        FileOutputStream fOut = new FileOutputStream(myFile);
+                        OutputStreamWriter myOutWriter =
+                                new OutputStreamWriter(fOut);
+                        myOutWriter.append(Builder);
+                        myOutWriter.close();
+                        fOut.close();
+                        tet.setText("Done !");}catch (Exception e){
+                            Toast.makeText(getBaseContext(), e.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }
